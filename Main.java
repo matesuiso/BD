@@ -1,5 +1,6 @@
 import java.util.Scanner;
-import db.Database;
+import db.Ninio;
+import db.NinioDAO;
 import java.sql.*;
 
 public class Main {
@@ -7,16 +8,13 @@ public class Main {
       int opc = 0;
       Scanner sc = new Scanner(System.in);
 
-      try {
-         ResultSet results = Database.getInstance().getConnection().prepareStatement("select * from persona").executeQuery();
-      } catch (Exception e) { }
-
       while (!(opc == 9)) {
          System.out.println("Seleccione una operacion con un numero");
          System.out.println("");
          System.out.println("(1) Insertar un ninio");
          System.out.println("(2) Eliminar un ninio");
          System.out.println("(3) Listar ninios con las colonias que asisten");
+         System.out.println("(4) Listar ninios");
          System.out.println("");
          System.out.println("(9) Salir");
          System.out.println("");
@@ -31,6 +29,9 @@ public class Main {
          }
          if (opc == 3) {
             Main.menuListar();
+         }
+         if (opc == 4) {
+           menuListar2();
          }
 
       }  // end while
@@ -47,12 +48,6 @@ public class Main {
       telefono = sc.nextLine();
       System.out.println("Inserte fecha de nacimiento de ninio AAAA-MM-DD");
       fecha = sc.nextLine();
-
-      try {
-         Database.getInstance().getConnection().prepareStatement("insert into persona (nombre, apellido, dni, fecha, telefono) values(,,,,)").executeQuery();
-      } catch (Exception e) {
-
-      }
    }
 
    public static void menuEliminar() {
@@ -67,6 +62,17 @@ public class Main {
       int dni;
       System.out.println("Inserte nombre de ninio");
       dni = sc.nextInt();
+   }
+
+   public static void menuListar2() {
+      for (Ninio n : NinioDAO.obtenerNinios()) {
+          System.out.print(n.apellido);
+          System.out.print(", ");
+          System.out.print(n.nombre);
+          System.out.print(" - ");
+          System.out.print(n.dni);
+          System.out.println("");
+      }
    }
 
 }
