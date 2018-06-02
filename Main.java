@@ -14,24 +14,22 @@ public class Main {
          System.out.println("(1) Insertar un ninio");
          System.out.println("(2) Eliminar un ninio");
          System.out.println("(3) Listar ninios con las colonias que asisten");
-         System.out.println("(4) Listar ninios");
          System.out.println("");
          System.out.println("(9) Salir");
          System.out.println("");
 
          opc = sc.nextInt();
 
-         if (opc == 1) {
-            Main.menuInsertar();
-         }
-         if (opc == 2) {
-            Main.menuEliminar();
-         }
-         if (opc == 3) {
-            Main.menuListar();
-         }
-         if (opc == 4) {
-           menuListar2();
+         switch (opc) {
+            case 1:
+              menuInsertar();
+              break;
+            case 2:
+              menuEliminar();
+              break;
+            case 3:
+              menuListar();
+              break;
          }
 
       }  // end while
@@ -58,19 +56,14 @@ public class Main {
    }
 
    public static void menuListar() {
-      Scanner sc = new Scanner(System.in);
-      int dni;
-      System.out.println("Inserte nombre de ninio");
-      dni = sc.nextInt();
-   }
+     System.out.println("Apellido  |  Nombre  | Colonias a las que asiste");
 
-   public static void menuListar2() {
-      for (Ninio n : NinioDAO.obtenerNinios()) {
+      for (Ninio n : NinioDAO.obtenerNiniosConColonias()) {
           System.out.print(n.apellido);
-          System.out.print(", ");
+          System.out.print(" ");
           System.out.print(n.nombre);
-          System.out.print(" - ");
-          System.out.print(n.dni);
+          System.out.print(" ");
+          System.out.print(n.colonias);
           System.out.println("");
       }
    }
