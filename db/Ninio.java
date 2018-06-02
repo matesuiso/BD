@@ -5,7 +5,7 @@ public class Ninio {
    public String apellido;
    public String dni;
    public String telefono;
-   public String fechaNacimiento
+   public String fechaNacimiento;
 
    public Ninio(String nombre, String apellido, String dni, String telefono, String fechaNacimiento) {
       this.nombre = nombre;
