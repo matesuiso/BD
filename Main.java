@@ -18,15 +18,24 @@ public class Main {
          opc = sc.nextInt();
 
          if (opc == 1) {
-            Main.insertar();
+            Main.menuInsertar();
          }
-         if (opc == 2) {
-            Main.eliminar();
+         /*if (opc == 2) {
+            Main.menuEliminar();
          }
          if (opc == 3) {
-            Main.listar();
-         }
+            Main.menuListar();
+         }*/
 
       }  // end while
    }
+
+   public static void menuInsertar() {
+      Scanner sc = new Scanner(System.in);
+      String nombre, dni, apellido;
+      System.out.println("Inserte nombre de ninio");
+      nombre = sc.next;
+
+   }
+
 }
