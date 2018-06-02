@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.sql.PreparedStatement;
 
 public class NinioDAO {
 
@@ -41,14 +42,15 @@ public class NinioDAO {
 
     public static Ninio buscarNinio(String sbdni) {
         try {
-            ResultSet resultSet = Database
+            PreparedStatement ps = Database
                 .getInstance()
                 .getConnection()
                 .prepareStatement(
-                    "SELECT * FROM nino n JOIN persona p ON n.dni = p.dni WHERE n.dni=?", sbdni
-                )
-                .executeQuery();
-            if (resultSet.next()) {
+                    "SELECT * FROM nino n JOIN persona p ON n.dni = p.dni WHERE n.dni=?"
+                );
+            ps.setString(1, sbdni);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next())
                 return new Ninio(
                     resultSet.getString("nombre"),
                     resultSet.getString("apellido"),
@@ -56,9 +58,8 @@ public class NinioDAO {
                     resultSet.getString("telefono"),
                     resultSet.getString("fecha_nacimiento")
                 ); 
-                else {
-                    return null;    
-                }
+            else
+                return null;    
         } catch (SQLException e) {
             return null;
         }
