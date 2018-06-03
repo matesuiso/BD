@@ -48,7 +48,10 @@ public class NinioDAO {
       Connection conexion = Database.getInstance().getConnection();
       try {
          conexion.setAutoCommit(false);
-      } catch (SQLException e) { }
+      } catch (SQLException e) {
+         return false;
+      }
+
       Boolean resul = true;
       PreparedStatement ps;
 
@@ -58,26 +61,29 @@ public class NinioDAO {
          ps.setString(2, nuevoNinio.apellido);
          ps.setString(3, nuevoNinio.dni);
 
-         ps.executeQuery();
+         ps.executeUpdate();
 
-
-         ps = conexion.prepareStatement("INSERT INTO nino (dni, telefono, fecha_nacimiento) VALUES (?, ?, ?)");
+         ps = conexion.prepareStatement("INSERT INTO nino (dni, fecha_nacimiento, telefono) VALUES (?, ?, ?)");
          ps.setString(1, nuevoNinio.dni);
-         ps.setString(2, nuevoNinio.telefono);
-         ps.setString(3, nuevoNinio.fechaNacimiento);
+         ps.setString(2, nuevoNinio.fechaNacimiento);
+         ps.setString(3, nuevoNinio.telefono);
 
-         ps.executeQuery();
+         ps.executeUpdate();
 
          conexion.commit();
       } catch (SQLException e) {
          try {
             conexion.rollback();
          } catch (SQLException e1) { }
+
          resul = false;
+
       } finally {
+
          try {
             conexion.setAutoCommit(true);
          } catch (SQLException e) { }
+
       }
 
       return resul;
@@ -92,7 +98,9 @@ public class NinioDAO {
                 .prepareStatement(
                     "SELECT * FROM nino n JOIN persona p ON n.dni = p.dni WHERE n.dni=?"
                 );
+
             ps.setString(1, sbdni);
+
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next())
                 return new Ninio(
@@ -107,5 +115,52 @@ public class NinioDAO {
         } catch (SQLException e) {
             return null;
         }
+    }
+
+    public static Boolean eliminarNinio(String dni) {
+      Connection conexion = Database.getInstance().getConnection();
+
+      try {
+         conexion.setAutoCommit(false);
+      } catch (SQLException e) {
+         return false;
+      }
+
+      int sum = 0;
+
+      // en realidad hay que hacerlo de otra forma.. no falla, si no existiera el campo.. asique siempre devuelve true..
+      // hay que ver el resultado de las columnas afectadas
+        try {
+            PreparedStatement ps = conexion
+                .prepareStatement(
+                    "DELETE FROM nino WHERE nino.dni= ? "
+                );
+
+            ps.setString(1, dni);
+            sum += ps.executeUpdate();
+
+            ps = conexion
+                .prepareStatement(
+                    "DELETE FROM persona WHERE persona.dni= ?"
+                );
+
+            ps.setString(1, dni);
+
+            sum += ps.executeUpdate();
+            conexion.commit();
+
+        } catch (SQLException e) {
+
+              try {
+                 conexion.rollback();
+              } catch (SQLException e1) { }
+
+        } finally {
+           try {
+              conexion.setAutoCommit(true);
+           } catch (SQLException e) {     }
+        }
+
+        return (sum == 2) ? true : false;
     }
 }

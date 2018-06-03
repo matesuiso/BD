@@ -9,6 +9,9 @@ public class Main {
       Scanner sc = new Scanner(System.in);
 
       while (!(opc == 9)) {
+         System.out.println("");
+         System.out.println("");
+         System.out.println("");
          System.out.println("Seleccione una operacion con un numero");
          System.out.println("");
          System.out.println("(1) Insertar un ninio");
@@ -46,16 +49,32 @@ public class Main {
       telefono = sc.nextLine();
       System.out.println("Inserte fecha de nacimiento de ninio AAAA-MM-DD");
       fecha = sc.nextLine();
+      System.out.println("Inserte dni de ninio");
+      dni = sc.nextLine();
+
+      System.out.println("");
+      Ninio temporal = new Ninio(nombre, apellido, dni, telefono, fecha);
+      System.out.println("Resultado de la insercion: " + NinioDAO.insertarNinio(temporal));
+
+      System.out.println("");
+      System.out.println("");
    }
 
    public static void menuEliminar() {
       Scanner sc = new Scanner(System.in);
-      int dni;
-      System.out.println("Inserte nombre de ninio");
-      dni = sc.nextInt();
+      String dni;
+      System.out.println("Inserte dni de ninio");
+      dni = sc.nextLine();
+
+      System.out.println("");
+      System.out.println("Resultado de la eliminacion: " + NinioDAO.eliminarNinio(dni));
+
+      System.out.println("");
+      System.out.println("");
    }
 
    public static void menuListar() {
+     System.out.println("");
      System.out.println("Apellido  |  Nombre  | Colonias a las que asiste");
 
       for (Ninio n : NinioDAO.obtenerNiniosConColonias()) {
@@ -66,6 +85,9 @@ public class Main {
           System.out.print(n.colonias);
           System.out.println("");
       }
+      
+      System.out.println("");
+      System.out.println("");
    }
 
 }
