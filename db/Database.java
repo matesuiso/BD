@@ -36,7 +36,7 @@ public class Database {
                 "jdbc:mysql://" +
                 props.getProperty("host") + ":" +
                 props.getProperty("port") + "/" +
-                props.getProperty("name"),
+                props.getProperty("name") + "?useSSL=false",
                 props.getProperty("user"),
                 props.getProperty("password")
             );

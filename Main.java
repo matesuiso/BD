@@ -2,6 +2,7 @@ import java.util.Scanner;
 import db.Ninio;
 import db.NinioDAO;
 import java.sql.*;
+import java.util.InputMismatchException;
 
 public class Main {
    public static void main(String[] args) {
@@ -11,72 +12,106 @@ public class Main {
       while (!(opc == 9)) {
          System.out.println("");
          System.out.println("");
-         System.out.println("");
+         System.out.println("-----------------------------------------------");
          System.out.println("Seleccione una operacion con un numero");
          System.out.println("");
-         System.out.println("(1) Insertar un ninio");
-         System.out.println("(2) Eliminar un ninio");
-         System.out.println("(3) Listar ninios con las colonias que asisten");
+         System.out.println("(1) Insertar un niño");
+         System.out.println("(2) Buscar un niño");
+         System.out.println("(3) Listar niños con las colonias que asisten");
          System.out.println("");
          System.out.println("(9) Salir");
+         System.out.println("-----------------------------------------------");
          System.out.println("");
 
-         opc = sc.nextInt();
+         try {
+           opc = sc.nextInt();
+         } catch (InputMismatchException e) {
+           opc = 0;
+         }
 
          switch (opc) {
             case 1:
               menuInsertar();
               break;
             case 2:
-              menuEliminar();
+              menuBuscar();
               break;
             case 3:
               menuListar();
               break;
+            case 9:
+              break;
+            default:
+              System.out.println("La opción ingresada es inválida.");
          }
 
       }  // end while
    }
 
    public static void menuInsertar() {
+      System.out.println(" ");
+      System.out.println(" ");
       Scanner sc = new Scanner(System.in);
       String nombre, dni, apellido, fecha, telefono;
-      System.out.println("Inserte nombre de ninio");
-      nombre = sc.nextLine();
-      System.out.println("Inserte apellido de ninio");
-      apellido = sc.nextLine();
-      System.out.println("Inserte telefono de ninio");
-      telefono = sc.nextLine();
-      System.out.println("Inserte fecha de nacimiento de ninio AAAA-MM-DD");
-      fecha = sc.nextLine();
-      System.out.println("Inserte dni de ninio");
+      System.out.println("Inserte dni de niño");
       dni = sc.nextLine();
+      System.out.println("Inserte nombre de niño");
+      nombre = sc.nextLine();
+      System.out.println("Inserte apellido de niño");
+      apellido = sc.nextLine();
+      System.out.println("Inserte telefono de niño");
+      telefono = sc.nextLine();
+      System.out.println("Inserte fecha de nacimiento de niño (AAAA-MM-DD)");
+      fecha = sc.nextLine();
+      System.out.println(" ");
+      System.out.println(" ");
 
-      System.out.println("");
-      Ninio temporal = new Ninio(nombre, apellido, dni, telefono, fecha);
-      System.out.println("Resultado de la insercion: " + NinioDAO.insertarNinio(temporal));
+      if (NinioDAO.insertarNinio(
+        new Ninio(
+          nombre,
+          apellido,
+          dni,
+          telefono,
+          fecha
+        )
+      ))
+          System.out.println("El niño ha sido guardado con éxito.");
+      else
+          System.out.println("No se pudo guardar el niño.");
 
-      System.out.println("");
-      System.out.println("");
+          System.out.println(" ");
    }
 
-   public static void menuEliminar() {
+   public static void menuBuscar() {
       Scanner sc = new Scanner(System.in);
-      String dni;
-      System.out.println("Inserte dni de ninio");
-      dni = sc.nextLine();
+      int dni;
+      System.out.println(" ");
+      System.out.println(" ");
+      System.out.println("Inserte el dni del niño a buscar");
+      dni = sc.nextInt();
+      System.out.println(" ");
 
-      System.out.println("");
-      System.out.println("Resultado de la eliminacion: " + NinioDAO.eliminarNinio(dni));
+      Ninio n = NinioDAO.buscarNinio(String.valueOf(dni));
+      if (n != null) {
+        System.out.print(n.apellido);
+        System.out.print(" ");
+        System.out.print(n.nombre);
+        System.out.print(" ");
+        System.out.print(n.dni);
+        System.out.print(" ");
+        System.out.print(n.fechaNacimiento);
+        System.out.println("");
+      } else
+        System.out.println("No se ha encontrado ningún niño con el dni " + dni);
 
-      System.out.println("");
-      System.out.println("");
+        System.out.println(" ");
+        System.out.println(" ");
    }
 
    public static void menuListar() {
-     System.out.println("");
-     System.out.println("Apellido  |  Nombre  | Colonias a las que asiste");
-
+      System.out.println(" ");
+      System.out.println(" ");
+      
       for (Ninio n : NinioDAO.obtenerNiniosConColonias()) {
           System.out.print(n.apellido);
           System.out.print(" ");
@@ -85,7 +120,7 @@ public class Main {
           System.out.print(n.colonias);
           System.out.println("");
       }
-      
+
       System.out.println("");
       System.out.println("");
    }
