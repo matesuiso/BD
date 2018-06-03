@@ -111,13 +111,15 @@ public class Main {
    public static void menuListar() {
       System.out.println(" ");
       System.out.println(" ");
-      
+
       for (Ninio n : NinioDAO.obtenerNiniosConColonias()) {
+          System.out.print("Apellido y nombre: ");
           System.out.print(n.apellido);
           System.out.print(" ");
-          System.out.print(n.nombre);
-          System.out.print(" ");
+          System.out.println(n.nombre);
+          System.out.print("Colonias a las que asiste: ");
           System.out.print(n.colonias);
+          System.out.println("");
           System.out.println("");
       }
 
