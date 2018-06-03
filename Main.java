@@ -18,6 +18,7 @@ public class Main {
          System.out.println("(1) Insertar un niño");
          System.out.println("(2) Buscar un niño");
          System.out.println("(3) Listar niños con las colonias que asisten");
+         System.out.println("(4) Eliminar niño segun DNI");
          System.out.println("");
          System.out.println("(9) Salir");
          System.out.println("-----------------------------------------------");
@@ -38,6 +39,9 @@ public class Main {
               break;
             case 3:
               menuListar();
+              break;
+            case 4:
+              menuEliminar();
               break;
             case 9:
               break;
@@ -75,11 +79,26 @@ public class Main {
           fecha
         )
       ))
+      System.out.println(" ");
           System.out.println("El niño ha sido guardado con éxito.");
       else
           System.out.println("No se pudo guardar el niño.");
 
           System.out.println(" ");
+   }
+
+   public static void menuEliminar() {
+      System.out.println(" ");
+      System.out.println(" ");
+      String dni;
+      Scanner sc = new Scanner(System.in);
+      System.out.println("Inserte dni de niño");
+      dni = sc.nextLine();
+
+      if (NinioDAO.eliminarNinio(dni))
+         System.out.println("Niño borrado con exito!");
+      else
+         System.out.println("No se ha borrado ningun niño con el dni " + dni);
    }
 
    public static void menuBuscar() {
