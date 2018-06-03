@@ -58,15 +58,14 @@ public class NinioDAO {
          ps.setString(2, nuevoNinio.apellido);
          ps.setString(3, nuevoNinio.dni);
 
-         ps.executeQuery();
-
+         ps.executeUpdate();
 
          ps = conexion.prepareStatement("INSERT INTO nino (dni, telefono, fecha_nacimiento) VALUES (?, ?, ?)");
          ps.setString(1, nuevoNinio.dni);
          ps.setString(2, nuevoNinio.telefono);
          ps.setString(3, nuevoNinio.fechaNacimiento);
 
-         ps.executeQuery();
+         ps.executeUpdate();
 
          conexion.commit();
       } catch (SQLException e) {
