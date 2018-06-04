@@ -12,7 +12,7 @@ create table asociacion (
 );
 
 create table colonia (
-	  cod_colonia int unsigned auto_increment,
+	cod_colonia int unsigned auto_increment,
     nombre_asoc varchar(30),
     ubicacion varchar(30),
     primary key (cod_colonia),
@@ -144,6 +144,7 @@ create trigger chk_edad_nino before insert on nino
       set message_text = 'La fecha de nacimiento no puede ser anterior a 01/01/2010';
     end if;
   end;
+$$
 
 create trigger audit_cambio_lider after update on actividad
   for each row

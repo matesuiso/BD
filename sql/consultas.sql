@@ -28,9 +28,26 @@ SELECT p.apellido, p.nombre, c.cod_certificado, c.grado, a.nombre
 FROM certificado c, lider l, asociacion a, persona p
 WHERE l.cod_certificado = c.cod_certificado AND c.nombre_asoc = a.nombre AND p.dni = l.dni;
 
--- 
-SELECT *
-FROM 
-WHERE ;
+-- Lideres que solo ayudan, y que no son responsables de ninguna actividad 
+SELECT l.*
+FROM lider l, ayuda ay
+WHERE l.dni = ay.dni  AND l.dni NOT IN (SELECT l.dni
+										FROM lider l, actividad ac
+                                        WHERE l.dni = ac.dni_lider)
+;
 
--- 
+
+-- Colonias que solo tienen una actividad
+SELECT col.*
+FROM colonia col, actividad act
+WHERE col.cod_colonia = act.cod_colonia
+GROUP BY col.cod_colonia
+HAVING COUNT(act.cod_actividad) < 2;
+
+
+-- Lideres que tienen mas de un telefono
+SELECT p.*
+FROM lider l, mtel, persona p
+WHERE l.dni = mtel.dni AND p.dni = l.dni
+GROUP BY l.dni
+HAVING COUNT(mtel.telefono) > 1;
