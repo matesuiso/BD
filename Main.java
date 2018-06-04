@@ -10,8 +10,6 @@ public class Main {
       Scanner sc = new Scanner(System.in);
 
       while (!(opc == 9)) {
-         System.out.println("");
-         System.out.println("");
          System.out.println("-----------------------------------------------");
          System.out.println("Seleccione una operacion con un numero");
          System.out.println("");
@@ -79,7 +77,6 @@ public class Main {
           fecha
         )
       ))
-      System.out.println(" ");
           System.out.println("El niño ha sido guardado con éxito.");
       else
           System.out.println("No se pudo guardar el niño.");

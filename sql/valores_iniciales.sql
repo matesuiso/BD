@@ -65,11 +65,19 @@ insert into juego (cod_actividad, tipo, descripcion, cant_part) values
 	(7, 'Recreativo', 'Un jugador está "manchado" y debe manchar al resto, que deben huir.', 10),
     (8, 'Juego electrónico', '100 jugadores caen en una isla y deben escapar de la tormenta y matarse entre si.', 100);
 
-insert into deporte (cod_actividad, tipo, accesorios, horas) values
-	(2, 'Deporte de equipo', 'Botines, canilleras y pelota', 5),
-	(3, 'Deporte individual', 'Antiparras y gorro', 3),
-    (5, 'Deporte de equipo', 'Pelota', 5),
-    (6, 'Deporte de equipo', 'Pelota', 5);
+insert into deporte (cod_actividad, tipo, horas) values
+	(2, 'Deporte de equipo', 5),
+	(3, 'Deporte individual', 3),
+    (5, 'Deporte de equipo', 5),
+    (6, 'Deporte de equipo', 5);
+    
+insert into maccesorio (cod_actividad, accesorio) values
+	(2, 'Botines'),
+    (2, 'Canilleras'),
+    (2, 'Pelota'),
+    (5, 'Pelota'),
+    (6, 'Pelota'),
+    (3, 'Antiparras');
 
 insert into campamento (cod_actividad, ubicacion, duracion) values
 	(4, 'campo', 5);

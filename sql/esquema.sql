@@ -105,11 +105,18 @@ create table campamento (
 create table deporte (
 	cod_actividad int unsigned,
     tipo varchar(30),
-    accesorios varchar(30),
     horas int,
     primary key (cod_actividad),
     foreign key (cod_actividad) references actividad(cod_actividad) on delete cascade
 );
+
+create table maccesorio (
+	cod_actividad int unsigned,
+    accesorio varchar(30),
+    primary key (cod_actividad, accesorio),
+    foreign key (cod_actividad) references deporte(cod_actividad) on delete cascade
+);
+
 
 create table juego (
 	cod_actividad int unsigned,
